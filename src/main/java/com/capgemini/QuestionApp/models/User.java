@@ -1,8 +1,24 @@
 package com.capgemini.QuestionApp.models;
 
+import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})	// TODO @JsonIgnoreProperties
 public class User {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //TODO changed AUTO to IDENTITY
 	private Long id;
 	private String username;
 	private String password;
@@ -10,7 +26,15 @@ public class User {
 	private String lastName;
 	private String email;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(insertable = false, updatable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")		// updatable=false & insertable=false means mysql will create timestamp for you
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy") // pattern applies to JSON object that is passed back to client
+	private Date creationDate;
+		
 	
+	public Date getCreationDate() {
+		return creationDate;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -28,6 +52,9 @@ public class User {
 	}
 	public String getUsername() {
 		return username;
+	}
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 	public void setEmail(String email) {
 		this.email = email;
