@@ -38,4 +38,9 @@ public class UserController {
 	public void createUser(@RequestBody User user) {
 		userService.createUser(user);
 	}
+	
+	@RequestMapping(value="/authenticateUser", method=RequestMethod.POST)
+	public User authenticateUser(@RequestBody User user) {
+		return userService.authenticateUser(user);
+	}
 }
