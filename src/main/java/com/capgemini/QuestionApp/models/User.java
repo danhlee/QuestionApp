@@ -24,14 +24,20 @@ public class User {
 	private String password;
 	private String firstName;
 	private String lastName;
-	private String email;
 	
+	@Column(unique=true)
+	private String email;
+		
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(insertable = false, updatable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")		// updatable=false & insertable=false means mysql will create timestamp for you
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy") // pattern applies to JSON object that is passed back to client
 	private Date creationDate;
-		
 	
+	@Column(columnDefinition="BOOLEAN DEFAULT FALSE")
+	private boolean isAdmin;
+	
+	
+	// getters
 	public Date getCreationDate() {
 		return creationDate;
 	}
@@ -53,6 +59,14 @@ public class User {
 	public String getUsername() {
 		return username;
 	}
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+	
+	// setters
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}

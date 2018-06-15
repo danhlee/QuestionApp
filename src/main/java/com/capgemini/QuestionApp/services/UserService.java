@@ -13,7 +13,7 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	public List<User> getUsers() {
 		return userRepository.findAll();
 	}
@@ -24,6 +24,10 @@ public class UserService {
 
 	public void createUser(User user) {
 		userRepository.save(user);
+	}
+
+	public User authenticateUser(User user) {
+		return userRepository.getUserByEmail(user);
 	}
 
 }
